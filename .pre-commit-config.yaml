@@ -11,11 +11,6 @@ repos:
         always_run: true
         args:
           - "--args=--output-check=true"
-      - id: terrascan
-        args:
-          - "--args=-c .config/terrascan.yaml"
-          - "--args=--non-recursive"
-          - "--args=-i terraform" #If we don't specify this it came back with Docker failures and produces a non zero exit code
       - id: terraform_tflint
         args:
           - "--args=--only=terraform_deprecated_interpolation"
@@ -30,10 +25,6 @@ repos:
           #- '--args=--only=terraform_required_version' # This is bugged with the new Terraform provider syntax
           - "--args=--only=terraform_required_providers"
           - "--args=--only=terraform_workspace_remote"
-      - id: terraform_tfsec
-        args:
-          - "--args=--exclude-downloaded-modules"
-          - "--args=--concise-output"
   # Native Git PreCommit Hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0

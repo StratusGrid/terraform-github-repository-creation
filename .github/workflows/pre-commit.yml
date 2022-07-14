@@ -42,8 +42,6 @@ jobs:
         run: |
           pip install pre-commit
           brew install tflint
-          brew install terrascan
-          brew install tfsec
           brew install terraform-docs
       - name: Inits
         run: |
