@@ -8,10 +8,12 @@ variable "repositories" {
 
 variable "github_owner" {
   description = "Owner of the GitHub repository"
+  type        = string
 }
 
 variable "is_template" {
   description = "Boolean to set the repositories given as template or not"
+  type        = bool
   default     = false
 }
 
