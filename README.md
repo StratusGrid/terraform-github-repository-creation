@@ -1,40 +1,44 @@
 <!-- BEGIN_TF_DOCS -->
-# template-terraform-module-starter
+# terraform-github-repository-creation
 
-GitHub: [StratusGrid/template-terraform-module-starter](https://github.com/StratusGrid/template-terraform-module-starter)
+GitHub: [StratusGrid/terraform-github-repository-creation](https://github.com/StratusGrid/terraform-github-repository-creation)
 
-This Repo is meant to act as a template which can be used
-when creating new modules.
+This Repo is to create GitHub repositories within StratusGrid organization with all of our workflow standards. It can use repository templates to provision a repository.
 
-<span style="color:red">**Notes:</span>
-- Don't forget to change the module source repo tag in `tags.tf`!
-- Please remove all of the unnecessary initial documentation from the `.terraform-docs.yml` file as they exist purely to make the module and not for continual publishing.
-- Update the examples and include the Terraform registry information and proper version constraint. A version constraint would generally look like this `~> 1.0`
+To authenticate against GitHub you need to use `GITHUB_TOKEN` and `GITHUB_OWNER` env variables. Be sure that your `GITHUB_TOKEN` has enough permissions within the GitHub organization to manage repositories.
+```
+$ export GITHUB_TOKEN=ghp_yBMxjJKHIUujghjGHUaJhgd
+$ export GITHUB_OWNER=StratusGrid
+```
 
 ## Example
 
 ```hcl
-module "template_terraform_module_starter" {
-  source  = "StratusGrid/template-terraform-module-starter/aws"
-  version = "1.0.0"
-  # source   = "github.com/StratusGrid/terraform-aws-template-terraform-module-starter"
-  name       = "${var.name_prefix}-template-terraform-module-starter${local.name_suffix}"
-  input_tags = merge(local.common_tags, {})
+module "terraform-github-repository-creation" {
+  source   = "github.com/StratusGrid/terraform-github-repository-creation"
+  github_owner = "StratusGrid"
+  repositories = {
+      my-awesome-terraform-module = {
+        repository_template = "terraform-automation-module-starter"
+        required_approving_review_count = 2
+      }
+      my-awesome-terraform-project = {
+        repository_template = "terraform-automation-project-starter"
+      }
+}
 }
 ```
 
 ## StratusGrid Standards we assume
 
-- This repo is designed to be built upon the [StratusGrid Account Starter Template](https://github.com/StratusGrid/terraform-account-starter), this base template configures the remote backend and SOPS baseline requirements.
+- This repo is designed to be built upon the [StratusGrid Terraform Automation](https://github.com/StratusGrid/terraform-automation)
 - All resource names and name tags shall use `_` and not `-`s
-- The old naming standard for common files such as inputs, outputs, providers, etc was to prefix them with a `-`, this is no longer true as it's not POSIX compliant. Our pre-commit hooks will fail with this old standard.
 - StratusGrid generally follows the TerraForm standards outlined [here](https://www.terraform-best-practices.com/naming)
 
 ## Repo Knowledge
 
 This repo has several base requirements
-- This repo is based upon the AWS `~> 4.9.0` provider
-- The following packages are installed via brew: `tflint`, `terrascan`, `terraform-docs`, `gitleaks`, `tfsec`, `pre-commit`, `sops`, `go`
+- The following packages are installed via brew: `tflint`, `terraform-docs`, `gitleaks`, `pre-commit`, `go`
 - Install `bash` through Brew for Bash 5.0, otherwise it will fail with the error that looks like `declare: -g: invalid option`
 - If you need more tflint plugins, please edit the `.tflint.hcl` file with the instructions from [here](https://github.com/terraform-linters/tflint)
 - It's highly recommend that you follow the Git Pre-Commit Instructions below, these will run in GitHub though they should be ran locally to reduce issues
@@ -61,11 +65,6 @@ pre-commit run --all-files
 pre-commit install
 ```
 
-### Template Documentation
-
-A sample template Git Repo with how we should setup client infrastructure, in this case it's shared infrastructure.
-More details are available [here](https://stratusgrid.atlassian.net/wiki/spaces/MS/pages/2065694728/MSP+Client+Setup+-+Procedure) in confluence.
-
 ## Documentation
 
 This repo is self documenting via Terraform Docs, please see the note at the bottom.
@@ -78,9 +77,6 @@ The StratusGrid standard for Terraform Outputs.
 
 ### `README.md`
 It's this file! I'm always updated via TF Docs!
-
-### `tags.tf`
-The StratusGrid standard for provider/module level tagging. This file contains logic to always merge the repo URL.
 
 ### `variables.tf`
 All variables related to this repo for all facets.
@@ -130,24 +126,30 @@ This file contains the plugin data for TFLint to run.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9 |
+| <a name="requirement_github"></a> [github](#requirement\_github) | >= 4.5.1 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_iam_role.example_resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [github_branch_protection.this_main](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection) | resource |
+| [github_repository.this](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository) | resource |
+| [github_team_repository.this](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_input_tags"></a> [input\_tags](#input\_input\_tags) | Map of tags to apply to resources | `map(string)` | <pre>{<br>  "Developer": "StratusGrid",<br>  "Provisioner": "Terraform"<br>}</pre> | no |
-| <a name="input_name"></a> [name](#input\_name) | name to prepend to all resource names within module | `string` | n/a | yes |
+| <a name="input_create"></a> [create](#input\_create) | Whether to create repositories | `bool` | `true` | no |
+| <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | Owner of the GitHub repository | `any` | n/a | yes |
+| <a name="input_is_template"></a> [is\_template](#input\_is\_template) | Boolean to set the repositories given as template or not | `bool` | `false` | no |
+| <a name="input_repositories"></a> [repositories](#input\_repositories) | A map of Repository objects and their source template repos | <pre>map(object({<br>    repository_template             = optional(string)<br>    required_approving_review_count = optional(number)<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_github_repositories"></a> [github\_repositories](#output\_github\_repositories) | A map of the Github repositories. |
 
 ---
 

@@ -46,7 +46,7 @@ resource "github_team_repository" "this" {
 }
 
 data "github_repository" "this" {
-  for_each   = var.create ? github_repository.this : {}
+  for_each  = var.create ? github_repository.this : {}
   full_name = "hashicorp/terraform"
 }
 

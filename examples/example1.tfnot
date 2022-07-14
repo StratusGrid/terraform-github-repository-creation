@@ -1,0 +1,13 @@
+module "terraform-github-repository-creation" {
+  source   = "github.com/StratusGrid/terraform-github-repository-creation"
+  github_owner = "StratusGrid"
+  repositories = {
+      my-awesome-terraform-module = {
+        repository_template = "terraform-automation-module-starter"
+        required_approving_review_count = 2
+      }
+      my-awesome-terraform-project = {
+        repository_template = "terraform-automation-project-starter"
+      }
+}
+}
