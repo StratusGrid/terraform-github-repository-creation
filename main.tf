@@ -6,15 +6,17 @@ locals {
 }
 
 resource "github_repository" "this" {
-  for_each             = var.create ? local.repositories : {}
-  name                 = each.key
-  is_template          = var.is_template
-  visibility           = "private"
-  has_downloads        = true
-  has_issues           = true
-  has_projects         = true
-  has_wiki             = true
-  vulnerability_alerts = true
+  for_each               = var.create ? local.repositories : {}
+  name                   = each.key
+  is_template            = var.is_template
+  visibility             = "private"
+  has_downloads          = true
+  has_issues             = true
+  has_projects           = true
+  has_wiki               = true
+  vulnerability_alerts   = true
+  delete_branch_on_merge = true
+  allow_merge_commit     = false
 
   dynamic "template" {
     for_each = local.repositories[each.key].repository_template == "" ? [] : [1]
