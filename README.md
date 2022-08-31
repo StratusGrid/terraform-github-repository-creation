@@ -5,12 +5,6 @@ GitHub: [StratusGrid/terraform-github-repository-creation](https://github.com/St
 
 This Repo is to create GitHub repositories within StratusGrid organization with all of our workflow standards. It can use repository templates to provision a repository.
 
-To authenticate against GitHub you need to use `GITHUB_TOKEN` and `GITHUB_OWNER` env variables. Be sure that your `GITHUB_TOKEN` has enough permissions within the GitHub organization to manage repositories.
-```
-$ export GITHUB_TOKEN=ghp_yBMxjJKHIUujghjGHUaJhgd
-$ export GITHUB_OWNER=StratusGrid
-```
-
 ## Example
 
 ```hcl
