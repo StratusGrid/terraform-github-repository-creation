@@ -22,3 +22,9 @@ variable "create" {
   type        = bool
   default     = true
 }
+
+variable "visibility" {
+  description = "Visibility of the repository."
+  type        = string
+  default     = "private"
+}
