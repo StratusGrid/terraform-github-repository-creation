@@ -2,6 +2,7 @@ locals {
   repositories = defaults(var.repositories, {
     repository_template             = ""
     required_approving_review_count = 2
+    visibility                      = "private"
   })
 }
 
