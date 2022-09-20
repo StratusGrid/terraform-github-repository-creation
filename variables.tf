@@ -3,6 +3,7 @@ variable "repositories" {
   type = map(object({
     repository_template             = optional(string)
     required_approving_review_count = optional(number)
+    visibility                      = optional(string)
   }))
 }
 
@@ -21,10 +22,4 @@ variable "create" {
   description = "Whether to create repositories"
   type        = bool
   default     = true
-}
-
-variable "visibility" {
-  description = "Visibility of the repository."
-  type        = string
-  default     = "private"
 }

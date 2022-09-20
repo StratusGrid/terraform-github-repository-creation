@@ -2,6 +2,7 @@ locals {
   repositories = defaults(var.repositories, {
     repository_template             = ""
     required_approving_review_count = 2
+    visibility                      = "private"
   })
 }
 
@@ -9,7 +10,7 @@ resource "github_repository" "this" {
   for_each               = var.create ? local.repositories : {}
   name                   = each.key
   is_template            = var.is_template
-  visibility             = var.visibility
+  visibility             = local.repositories[each.key].visibility
   has_downloads          = true
   has_issues             = true
   has_projects           = true
