@@ -49,7 +49,7 @@ resource "github_team_repository" "this-terraform" {
   for_each   = var.create ? github_repository.this : {}
   team_id    = data.github_team.terraformers.id
   repository = github_repository.this[each.key].name
-  permission = "admin"
+  permission = "maintainer"
 }
 
 resource "github_team_repository" "this-terraform-admin" {
