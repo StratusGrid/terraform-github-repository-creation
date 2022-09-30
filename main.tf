@@ -45,14 +45,14 @@ data "github_team" "terraform-admins" {
   slug = "terraform-admins"
 }
 
-resource "github_team_repository" "this" {
+resource "github_team_repository" "this-terraform" {
   for_each   = var.create ? github_repository.this : {}
   team_id    = data.github_team.terraformers.id
   repository = github_repository.this[each.key].name
   permission = "admin"
 }
 
-resource "github_team_repository" "this" {
+resource "github_team_repository" "this-terraform-admin" {
   for_each   = var.create ? github_repository.this : {}
   team_id    = data.github_team.terraform-admins.id
   repository = github_repository.this[each.key].name
