@@ -60,10 +60,11 @@ resource "github_team_repository" "this_terraform_admin" {
 }
 
 resource "github_branch_protection" "this_main" {
-  for_each       = var.create ? github_repository.this : {}
-  repository_id  = github_repository.this[each.key].name
-  pattern        = "main"
-  enforce_admins = true
+  for_each                = var.create ? github_repository.this : {}
+  repository_id           = github_repository.this[each.key].name
+  pattern                 = "main"
+  enforce_admins          = true
+  required_linear_history = var.required_linear_history
 
 
   required_pull_request_reviews {

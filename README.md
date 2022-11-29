@@ -139,6 +139,7 @@ This file contains the plugin data for TFLint to run.
 | <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | Owner of the GitHub repository | `string` | n/a | yes |
 | <a name="input_is_template"></a> [is\_template](#input\_is\_template) | Boolean to set the repositories given as template or not | `bool` | `false` | no |
 | <a name="input_repositories"></a> [repositories](#input\_repositories) | A map of Repository objects and their source template repos | <pre>map(object({<br>    repository_template             = optional(string)<br>    required_approving_review_count = optional(number)<br>    visibility                      = optional(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_required_linear_history"></a> [required\_linear\_history](#input\_required\_linear\_history) | If it needs to use the linear history feature | `bool` | `true` | no |
 
 ## Outputs
 
