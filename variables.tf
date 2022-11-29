@@ -23,3 +23,9 @@ variable "create" {
   type        = bool
   default     = true
 }
+
+variable "required_linear_history" {
+  description = "If it needs to use the linear history feature"
+  type        = bool
+  default     = true
+}
