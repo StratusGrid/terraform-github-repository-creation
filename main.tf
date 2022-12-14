@@ -1,16 +1,8 @@
-locals {
-  repositories = defaults(var.repositories, {
-    repository_template             = ""
-    required_approving_review_count = 2
-    visibility                      = "private"
-  })
-}
-
 resource "github_repository" "this" {
-  for_each               = var.create ? local.repositories : {}
+  for_each               = var.create ? var.repositories : {}
   name                   = each.key
   is_template            = var.is_template
-  visibility             = local.repositories[each.key].visibility
+  visibility             = var.repositories[each.key].visibility
   has_downloads          = true
   has_issues             = true
   has_projects           = true
@@ -20,10 +12,10 @@ resource "github_repository" "this" {
   allow_merge_commit     = false
 
   dynamic "template" {
-    for_each = local.repositories[each.key].repository_template == "" ? [] : [1]
+    for_each = var.repositories[each.key].repository_template == "" ? [] : [1]
     content {
       owner      = var.github_owner
-      repository = local.repositories[each.key].repository_template
+      repository = var.repositories[each.key].repository_template
     }
   }
 
@@ -70,6 +62,6 @@ resource "github_branch_protection" "this_main" {
   required_pull_request_reviews {
     dismiss_stale_reviews           = true
     require_code_owner_reviews      = true
-    required_approving_review_count = local.repositories[each.key].required_approving_review_count
+    required_approving_review_count = var.repositories[each.key].required_approving_review_count
   }
 }
