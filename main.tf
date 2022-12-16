@@ -56,7 +56,7 @@ resource "github_branch_protection" "this_main" {
   repository_id           = github_repository.this[each.key].name
   pattern                 = "main"
   enforce_admins          = true
-  required_linear_history = var.required_linear_history
+  required_linear_history = var.repositories[each.key].required_linear_history
 
 
   required_pull_request_reviews {

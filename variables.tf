@@ -5,6 +5,7 @@ variable "repositories" {
     repository_template             = optional(string, "")
     required_approving_review_count = optional(number, 2)
     visibility                      = optional(string, "private")
+    required_linear_history         = optional(bool, false)
   }))
 }
 
@@ -23,10 +24,4 @@ variable "create" {
   description = "Whether to create repositories"
   type        = bool
   default     = true
-}
-
-variable "required_linear_history" {
-  description = "If it needs to use the linear history feature"
-  type        = bool
-  default     = false
 }

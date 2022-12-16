@@ -48,8 +48,7 @@ module "terraform-github-repository-creation" {
 | <a name="input_create"></a> [create](#input\_create) | Whether to create repositories | `bool` | `true` | no |
 | <a name="input_github_owner"></a> [github\_owner](#input\_github\_owner) | Owner of the GitHub repository | `string` | n/a | yes |
 | <a name="input_is_template"></a> [is\_template](#input\_is\_template) | Boolean to set the repositories given as template or not | `bool` | `false` | no |
-| <a name="input_repositories"></a> [repositories](#input\_repositories) | A map of Repository objects and their source template repos | <pre>map(object({<br>    repository_template             = optional(string, "")<br>    required_approving_review_count = optional(number, 2)<br>    visibility                      = optional(string, "private")<br>  }))</pre> | n/a | yes |
-| <a name="input_required_linear_history"></a> [required\_linear\_history](#input\_required\_linear\_history) | If it needs to use the linear history feature | `bool` | `false` | no |
+| <a name="input_repositories"></a> [repositories](#input\_repositories) | A map of Repository objects and their source template repos | <pre>map(object({<br>    repository_template             = optional(string, "")<br>    required_approving_review_count = optional(number, 2)<br>    visibility                      = optional(string, "private")<br>    required_linear_history         = optional(bool, false)<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
