@@ -10,6 +10,7 @@ resource "github_repository" "this" {
   vulnerability_alerts   = true
   delete_branch_on_merge = true
   allow_merge_commit     = false
+  archived               = var.repositories[each.key].archived
 
   dynamic "template" {
     for_each = var.repositories[each.key].repository_template == "" ? [] : [1]
