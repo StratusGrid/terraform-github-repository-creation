@@ -6,6 +6,7 @@ variable "repositories" {
     required_approving_review_count = optional(number, 2)
     visibility                      = optional(string, "private")
     required_linear_history         = optional(bool, false)
+    archived                        = optional(bool, false)
   }))
 }
 
