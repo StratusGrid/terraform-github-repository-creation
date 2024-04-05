@@ -1,3 +1,5 @@
+header-from: ./.config/header.md
+
 version: ""
 
 formatter: markdown table
@@ -5,6 +7,7 @@ formatter: markdown table
 name: terraform-github-repository-creation
 
 content: |-
+  {{ .Header }}
   # terraform-github-repository-creation
 
   GitHub: [StratusGrid/terraform-github-repository-creation](https://github.com/StratusGrid/terraform-github-repository-creation)
@@ -31,6 +34,7 @@ content: |-
 
 sections:
   show:
+    - header
     - resources
     - inputs
     - outputs
