@@ -7,7 +7,7 @@ resource "github_repository" "this" {
   has_issues             = true
   has_projects           = true
   has_wiki               = false
-  vulnerability_alerts   = true
+  vulnerability_alerts   = var.repositories[each.key].archived == true ? false : true
   delete_branch_on_merge = true
   allow_merge_commit     = false
   archived               = var.repositories[each.key].archived
